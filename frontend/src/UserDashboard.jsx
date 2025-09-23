@@ -403,7 +403,7 @@ const UserDashboard = () => {
                       </div>
                       <div className="meta-item">
                         <FiUsers className="meta-icon" />
-                        <span>{course.enrollmentCount || 0} Students</span>
+                        <span>{course.enrollmentCount || 0} Employees</span>
                       </div>
                       {course.duration && (
                         <div className="meta-item">

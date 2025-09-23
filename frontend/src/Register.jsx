@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import { FiUser, FiLock, FiEye, FiEyeOff, FiLoader, FiMail, FiUserPlus } from 'react-icons/fi';
+import { validatePassword, getPasswordStrength, getPasswordRequirementsText } from './utils/passwordValidation';
 import './Auth.css';
 
 const Register = () => {
@@ -18,6 +19,12 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [passwordTouched, setPasswordTouched] = useState(false);
+
+  // Password validation state
+  const passwordValidation = validatePassword(formData.password || '');
+  const passwordStrength = getPasswordStrength(formData.password || '');
+  const passwordRequirements = getPasswordRequirementsText();
 
   const handleChange = (e) => {
     setFormData({
@@ -25,6 +32,11 @@ const Register = () => {
       [e.target.name]: e.target.value
     });
     setError(''); // Clear error when user starts typing
+    
+    // Mark password as touched when user starts typing
+    if (e.target.name === 'password') {
+      setPasswordTouched(true);
+    }
   };
 
   const validateForm = () => {
@@ -32,10 +44,14 @@ const Register = () => {
       setError('Passwords do not match');
       return false;
     }
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+    
+    // Use the new password validation
+    const validation = validatePassword(formData.password || '');
+    if (!validation.isValid) {
+      setError('Password does not meet the requirements. Please check the password criteria.');
       return false;
     }
+    
     return true;
   };
 
@@ -130,10 +146,9 @@ const Register = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Create a password (min. 6 characters)"
+                placeholder="Create a strong password"
                 required
                 disabled={loading}
-                minLength={6}
               />
               <button
                 type="button"
@@ -144,6 +159,41 @@ const Register = () => {
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
             </div>
+            
+            {/* Password Strength Indicator */}
+            {passwordTouched && formData.password && (
+              <div className="password-feedback">
+                <div className="password-strength">
+                  <span className="strength-label">Password Strength: </span>
+                  <span className={`strength-indicator ${passwordStrength.level}`}>
+                    {passwordStrength.text}
+                  </span>
+                </div>
+                
+                {/* Password Requirements */}
+                <div className="password-requirements">
+                  <p className="requirements-title">Password must contain:</p>
+                  <ul className="requirements-list">
+                    {passwordRequirements.map((requirement, index) => {
+                      const requirementKeys = Object.keys(passwordValidation.requirements);
+                      const isRequirementMet = passwordValidation.requirements[requirementKeys[index]];
+                      
+                      return (
+                        <li 
+                          key={index} 
+                          className={isRequirementMet ? 'requirement-met' : 'requirement-unmet'}
+                        >
+                          <span className="requirement-icon">
+                            {isRequirementMet ? '✓' : '×'}
+                          </span>
+                          {requirement}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="form-group">

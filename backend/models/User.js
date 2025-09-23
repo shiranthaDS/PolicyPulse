@@ -23,19 +23,14 @@ const userSchema = new mongoose.Schema({
     minlength: [6, 'Password must be at least 6 characters long']
   },
   
-  role: {
-    type: String,
-    enum: ['student', 'admin'],
-    default: 'student'
-  },
   avatar: {
     type: String,
     default: ''
   },
   role: {
     type: String,
-    enum: ['student', 'instructor', 'admin'],
-    default: 'student'
+    enum: ['employee', 'instructor', 'admin', 'securitymanager', 'auditor'],
+    default: 'employee'
   },
   enrolledCourses: [{
     course: {

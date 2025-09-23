@@ -86,6 +86,38 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+.security-manager-link {
+  background: linear-gradient(135deg, #e53e3e, #c53030) !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-weight: 500 !important;
+}
+
+.security-manager-link:hover {
+  background: linear-gradient(135deg, #c53030, #9c2828) !important;
+  color: white !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.auditor-link {
+  background: linear-gradient(135deg, #8B4513, #A0522D) !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-weight: 500 !important;
+}
+
+.auditor-link:hover {
+  background: linear-gradient(135deg, #A0522D, #8B4513) !important;
+  color: white !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+}
+
 .user-menu {
   display: flex;
   align-items: center;

@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password,
-      role: role || 'student'
+      role: role || 'employee'
     });
 
     if (user) {
@@ -456,7 +456,7 @@ const getAllUsers = async (req, res) => {
 const getUserAnalytics = async (req, res) => {
   try {
     const totalUsers = await User.countDocuments();
-    const totalStudents = await User.countDocuments({ role: 'student' });
+    const totalStudents = await User.countDocuments({ role: 'employee' });
     const totalAdmins = await User.countDocuments({ role: 'admin' });
     
     // Get enrollment statistics

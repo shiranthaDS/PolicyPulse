@@ -199,7 +199,7 @@ const AdminDashboardHome = () => {
             <h3>{stats.userStats.totalUsers}</h3>
             <p>Total Users</p>
             <span className="stat-detail">
-              {stats.userStats.totalStudents} Students, {stats.userStats.totalAdmins} Admins
+              {stats.userStats.totalStudents} Employees, {stats.userStats.totalAdmins} Admins
             </span>
           </div>
         </div>
@@ -237,7 +237,7 @@ const AdminDashboardHome = () => {
             <div key={course._id} className="enrollment-item">
               <div className="course-info">
                 <h4>{course.courseName}</h4>
-                <span>{course.enrollmentCount} students enrolled</span>
+                <span>{course.enrollmentCount} employees enrolled</span>
               </div>
               <div className="progress-bar">
                 <div 

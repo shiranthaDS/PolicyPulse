@@ -146,7 +146,7 @@ const CourseEnroll = () => {
               </div>
               <div className="meta-item">
                 <FiUsers />
-                <span>{course.enrollmentCount || 0} students</span>
+                <span>{course.enrollmentCount || 0} employees</span>
               </div>
               <div className="meta-item">
                 <FiStar />
@@ -269,7 +269,7 @@ const CourseEnroll = () => {
               </div>
               <div className="stat-item">
                 <div className="stat-number">{course.enrollmentCount || 0}</div>
-                <div className="stat-label">Students Enrolled</div>
+                <div className="stat-label">Employees Enrolled</div>
               </div>
             </div>
           </div>

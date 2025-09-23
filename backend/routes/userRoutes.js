@@ -18,6 +18,7 @@ const {
 
 // Import middleware
 const { protect, authorize } = require('../middleware/auth');
+const { validatePasswordStrength } = require('../utils/passwordValidation');
 const { requireAdmin } = require('../middleware/adminAuth');
 const { body, param, validationResult } = require('express-validator');
 
@@ -48,13 +49,18 @@ const validateRegistration = [
     .normalizeEmail(),
     
   body('password')
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters long'),
+    .custom((password) => {
+      const validation = validatePasswordStrength(password);
+      if (!validation.isValid) {
+        throw new Error(validation.errors.join('. '));
+      }
+      return true;
+    }),
     
   body('role')
     .optional()
-    .isIn(['student', 'instructor', 'admin'])
-    .withMessage('Role must be student, instructor, or admin')
+    .isIn(['employee', 'instructor', 'admin', 'securitymanager', 'auditor'])
+    .withMessage('Role must be employee, instructor, admin, securitymanager, or auditor')
 ];
 
 // Login validation

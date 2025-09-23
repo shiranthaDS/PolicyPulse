@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import AddCourse from './admin/AddCourse';
 import CoursesList from './CoursesList';
 import CourseEnroll from './CourseEnroll';
 import CourseWorkspace from './CourseWorkspace';
@@ -9,8 +8,25 @@ import Login from './Login';
 import Register from './Register';
 import AdminDashboard from './admin/AdminDashboard';
 import UserDashboard from './UserDashboard';
-import { FiUser, FiLogOut, FiSettings, FiHome } from 'react-icons/fi';
+import SecurityManagerDashboard from './admin/SecurityManagerDashboard';
+import AuditorDashboard from './admin/AuditorDashboard';
+import { FiUser, FiLogOut, FiSettings, FiHome, FiShield, FiFileText } from 'react-icons/fi';
 import './App.css';
+
+// Protected Route Component for Employee Dashboard
+function EmployeeRoute({ children }) {
+  const { user, isAuthenticated } = useAuth();
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  if (user?.role !== 'employee') {
+    return <Navigate to="/" replace />;
+  }
+  
+  return children;
+}
 
 function NavBar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -31,12 +47,24 @@ function NavBar() {
           </Link>
           {isAuthenticated ? (
             <>
-              <Link to="/dashboard" className="nav-link">
-                <FiHome /> Dashboard
-              </Link>
+              {user?.role === 'employee' && (
+                <Link to="/dashboard" className="nav-link">
+                  <FiHome /> Dashboard
+                </Link>
+              )}
               {user?.role === 'admin' && (
                 <Link to="/admin" className="nav-link admin-link">
                   <FiSettings /> Admin Dashboard
+                </Link>
+              )}
+              {user?.role === 'securitymanager' && (
+                <Link to="/security-manager" className="nav-link security-manager-link">
+                  <FiShield /> Security Manager
+                </Link>
+              )}
+              {user?.role === 'auditor' && (
+                <Link to="/auditor" className="nav-link auditor-link">
+                  <FiFileText /> Auditor Dashboard
                 </Link>
               )}
               <div className="user-menu">
@@ -75,10 +103,16 @@ function App() {
             <Routes>
               <Route path="/" element={<CoursesList />} />
               <Route path="/courses" element={<CoursesList />} />
-              <Route path="/dashboard" element={<UserDashboard />} />
+              <Route path="/dashboard" element={
+                <EmployeeRoute>
+                  <UserDashboard />
+                </EmployeeRoute>
+              } />
               <Route path="/course/:courseId" element={<CourseEnroll />} />
               <Route path="/course/:courseId/workspace" element={<CourseWorkspace />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
+              <Route path="/security-manager" element={<SecurityManagerDashboard />} />
+              <Route path="/auditor" element={<AuditorDashboard />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Routes>

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Admin middleware to check if user has admin role
+// Admin/Security Manager/Auditor middleware to check if user has appropriate role
 const requireAdmin = async (req, res, next) => {
   try {
     // First check if user is authenticated
@@ -27,11 +27,11 @@ const requireAdmin = async (req, res, next) => {
       });
     }
 
-    // Check if user is admin
-    if (user.role !== 'admin') {
+    // Check if user is admin, security manager, or auditor
+    if (user.role !== 'admin' && user.role !== 'securitymanager' && user.role !== 'auditor') {
       return res.status(403).json({
         success: false,
-        message: 'Access denied. Admin privileges required.'
+        message: 'Access denied. Admin, Security Manager, or Auditor privileges required.'
       });
     }
 

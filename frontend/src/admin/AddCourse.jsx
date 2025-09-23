@@ -353,7 +353,7 @@ const AddCourse = () => {
                 name="courseDescription"
                 value={courseData.courseDescription}
                 onChange={handleCourseInputChange}
-                placeholder="Describe what students will learn..."
+                placeholder="Describe what employees will learn..."
                 rows="4"
               />
             </div>

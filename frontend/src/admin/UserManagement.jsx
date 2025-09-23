@@ -203,7 +203,7 @@ const UserManagement = () => {
             className="filter-select"
           >
             <option value="all">All Roles</option>
-            <option value="student">Students</option>
+            <option value="employee">Employees</option>
             <option value="admin">Admins</option>
           </select>
           
