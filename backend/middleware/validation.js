@@ -52,6 +52,14 @@ const validateCourseCreation = [
   body('lecturePages.*.content')
     .notEmpty()
     .withMessage('Each lecture page must have content'),
+  
+  // Optional video URL (YouTube) for lecture pages
+  body('lecturePages.*.videoUrl')
+    .optional()
+    .isLength({ max: 500 })
+    .withMessage('Video URL cannot exceed 500 characters')
+    .matches(/^(https?:\/\/)?(www\.youtube\.com|youtu\.be)\/.*/)
+    .withMessage('Video URL must be a valid YouTube link'),
     
   // Validate quizzes
   body('quizzes')
@@ -229,7 +237,8 @@ const sanitizeCourseData = (req, res, next) => {
     req.body.lecturePages = req.body.lecturePages.map(page => ({
       ...page,
       title: page.title?.trim(),
-      content: page.content?.trim()
+      content: page.content?.trim(),
+      videoUrl: page.videoUrl ? page.videoUrl.trim() : undefined
     }));
   }
   

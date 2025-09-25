@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import HomePage from './HomePage';
 import CoursesList from './CoursesList';
 import CoursesPage from './CoursesPage';
 import CourseEnroll from './CourseEnroll';
@@ -39,58 +40,85 @@ function NavBar() {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <Link to="/" className="nav-logo">
-          PolicyPulse 
-        </Link>
-        <div className="nav-links">
-         
-          {isAuthenticated ? (
-            <>
+        <div className="nav-brand">
+          <Link to="/" className="nav-logo">
+            <span className="logo-icon">🚀</span>
+            <span className="logo-text">PolicyPulse</span>
+          </Link>
+        </div>
+        
+        <div className="nav-center">
+          {isAuthenticated && (
+            <div className="nav-links-center">
               {user?.role === 'employee' && (
                 <>
-                  <Link to="/dashboard" className="nav-link">
-                    <FiHome /> Dashboard
+                  <Link to="/dashboard" className="nav-link nav-link-primary">
+                    <FiHome className="nav-icon" />
+                    <span>Dashboard</span>
                   </Link>
-                  <Link to="/courses-page" className="nav-link">
-                    <FiBook /> Courses
+                  <Link to="/courses-page" className="nav-link nav-link-primary">
+                    <FiBook className="nav-icon" />
+                    <span>Courses</span>
                   </Link>
                 </>
               )}
               {user?.role === 'admin' && (
-                <Link to="/admin" className="nav-link admin-link">
-                  <FiSettings /> Admin Dashboard
+                <Link to="/admin" className="nav-link nav-link-admin">
+                  <FiSettings className="nav-icon" />
+                  <span>Admin Panel</span>
                 </Link>
               )}
               {user?.role === 'securitymanager' && (
-                <Link to="/security-manager" className="nav-link security-manager-link">
-                  <FiShield /> Security Manager
+                <Link to="/security-manager" className="nav-link nav-link-security">
+                  <FiShield className="nav-icon" />
+                  <span>Security Manager</span>
                 </Link>
               )}
               {user?.role === 'auditor' && (
-                <Link to="/auditor" className="nav-link auditor-link">
-                  <FiFileText /> Auditor Dashboard
+                <Link to="/auditor" className="nav-link nav-link-auditor">
+                  <FiFileText className="nav-icon" />
+                  <span>Auditor Panel</span>
                 </Link>
               )}
-              <div className="user-menu">
-                <span className="user-info">
-                  <FiUser /> {user?.name}
-                </span>
-                <button onClick={handleLogout} className="logout-btn">
-                  <FiLogOut /> Logout
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-              <Link to="/register" className="nav-link">
-                Register
-              </Link>
-            </>
+            </div>
           )}
         </div>
+
+        <div className="nav-right">
+          {isAuthenticated ? (
+            <div className="user-menu">
+              <div className="user-profile">
+                <div className="user-avatar">
+                  <FiUser />
+                </div>
+                <div className="user-details">
+                  <span className="user-name">{user?.name}</span>
+                  <span className="user-role">{user?.role}</span>
+                </div>
+              </div>
+              <button onClick={handleLogout} className="logout-btn">
+                <FiLogOut />
+                <span>Logout</span>
+              </button>
+            </div>
+          ) : (
+            <div className="auth-buttons">
+              <Link to="/login" className="nav-link nav-link-secondary">
+                <span>Sign In</span>
+              </Link>
+              <Link to="/register" className="nav-link nav-link-cta">
+                <span>Register</span>
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button className="mobile-menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </nav>
   );
@@ -105,7 +133,7 @@ function App() {
 
           <main className="main-content">
             <Routes>
-              <Route path="/" element={<CoursesList />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/courses" element={<CoursesList />} />
               <Route path="/courses-page" element={
                 <EmployeeRoute>

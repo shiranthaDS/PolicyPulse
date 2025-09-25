@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="96" cy="96" r="86" fill="url(#grad1)" stroke="#ffffff" stroke-width="4"/>
+  
+  <!-- Book/Policy icon -->
+  <rect x="58" y="48" width="48" height="67" fill="#ffffff" rx="4"/>
+  <rect x="86" y="48" width="48" height="67" fill="#ffffff" rx="4"/>
+  
+  <!-- Pulse/Wave lines -->
+  <path d="M38 134 Q58 115, 77 134 T115 134 T154 134" stroke="#ffffff" stroke-width="6" fill="none"/>
+  <path d="M48 144 Q67 125, 86 144 T124 144 T163 144" stroke="#ffffff" stroke-width="4" fill="none" opacity="0.7"/>
+  
+  <!-- Small dot for pulse -->
+  <circle cx="96" cy="134" r="6" fill="#ffffff"/>
+</svg>

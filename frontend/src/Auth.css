@@ -61,22 +61,21 @@
   align-items: center;
 }
 
-.input-icon {
-  position: absolute;
-  left: 1rem;
-  color: #a0aec0;
-  font-size: 1.1rem;
-  z-index: 1;
-}
-
 .input-wrapper input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem;
   border: 2px solid #e2e8f0;
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
   background: #f7fafc;
+}
+
+/* Password inputs need extra padding on right for toggle button */
+.input-wrapper input[type="password"], 
+.input-wrapper input[name="password"], 
+.input-wrapper input[name="confirmPassword"] {
+  padding-right: 3rem;
 }
 
 .input-wrapper input:focus {
@@ -185,18 +184,10 @@
   background: #f0fff4;
 }
 
-.input-wrapper input:valid:not(:placeholder-shown) + .input-icon {
-  color: #48bb78;
-}
-
 /* Error states */
 .input-wrapper input:invalid:not(:placeholder-shown) {
   border-color: #f56565;
   background: #fed7d7;
-}
-
-.input-wrapper input:invalid:not(:placeholder-shown) + .input-icon {
-  color: #f56565;
 }
 
 /* Responsive Design */

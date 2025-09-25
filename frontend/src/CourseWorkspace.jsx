@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from './contexts/AuthContext';
 import MDEditor from '@uiw/react-md-editor';
+import { normalizeYouTubeUrl } from './utils/video';
 import {
   FiBook,
   FiHelpCircle,
@@ -444,9 +445,30 @@ const CourseWorkspace = () => {
         <div className="content-body">
           {currentPageType === 'lecture' && currentContent && (
             <div className="lecture-content">
+              {currentContent.data.videoUrl && (
+                // Normalize and embed YouTube video; fallback if invalid.
+                <div className="video-wrapper">
+                  {normalizeYouTubeUrl(currentContent.data.videoUrl) ? (
+                    <div className="responsive-video">
+                      <iframe
+                        src={normalizeYouTubeUrl(currentContent.data.videoUrl)}
+                        title={currentContent.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  ) : (
+                    <div className="invalid-video">
+                      <p>⚠️ Invalid video URL provided. Please update the lecture page.</p>
+                    </div>
+                  )}
+                </div>
+              )}
               <MDEditor.Markdown 
                 source={currentContent.data.content} 
                 style={{ whiteSpace: 'pre-wrap' }}
+                data-color-mode="light"
               />
               <div className="lecture-actions">
                 <button 
@@ -551,7 +573,14 @@ const CourseWorkspace = () => {
                     
                     {currentGlobalIndex === allContent.length - 1 && (
                       <button 
-                        onClick={() => navigate('/courses')}
+                        onClick={() => {
+                          // Navigate to dashboard for employees, otherwise go to home
+                          if (user?.role === 'employee') {
+                            navigate('/dashboard');
+                          } else {
+                            navigate('/');
+                          }
+                        }}
                         className="btn-primary"
                       >
                         <FiAward /> Course Complete

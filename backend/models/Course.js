@@ -53,6 +53,8 @@ const quizSchema = new mongoose.Schema({
 }, { _id: false });
 
 // Lecture Page Schema
+// Includes optional `videoUrl` kept raw (watch / youtu.be / shorts / embed). Frontend
+// normalizes to an embed URL. This keeps backend free from provider-specific logic.
 const lecturePageSchema = new mongoose.Schema({
   id: {
     type: String,
@@ -66,6 +68,12 @@ const lecturePageSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
+  },
+  // Optional YouTube video URL for this lecture page (validated in middleware).
+  videoUrl: {
+    type: String,
+    trim: true,
+    maxlength: [500, 'Video URL cannot exceed 500 characters']
   },
   pageNumber: {
     type: Number,

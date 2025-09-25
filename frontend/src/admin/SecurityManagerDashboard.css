@@ -6,7 +6,7 @@
 }
 
 .dashboard-header {
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 25px;
@@ -30,23 +30,20 @@
 
 .shield-icon {
   font-size: 3rem;
-  color: #667eea;
-  filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+  color: white;
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.3));
 }
 
 .title-section h1 {
   margin: 0;
   font-size: 2rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: white !important;
   font-weight: bold;
 }
 
 .title-section p {
   margin: 5px 0 0 0;
-  color: #666;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
 }
 

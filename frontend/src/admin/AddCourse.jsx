@@ -431,6 +431,18 @@ const AddCourse = () => {
                   )}
                 </div>
 
+                <div className="form-group">
+                  <label>YouTube Video URL (optional)</label>
+                  <input
+                    type="url"
+                    value={page.videoUrl || ''}
+                    onChange={(e) => updateLecturePage(page.id, 'videoUrl', e.target.value)}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    className="video-url-input"
+                  />
+                  <small className="hint">Supports watch, youtu.be, shorts, or embed links. Leave blank if no video.</small>
+                </div>
+
                 <div className="editor-container">
                   <MDEditor
                     value={page.content}

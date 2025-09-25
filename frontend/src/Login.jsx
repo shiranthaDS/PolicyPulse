@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
-import { FiUser, FiLock, FiEye, FiEyeOff, FiLoader, FiMail } from 'react-icons/fi';
+import { FiUser, FiEye, FiEyeOff, FiLoader } from 'react-icons/fi';
 import './Auth.css';
 
 const Login = () => {
@@ -32,7 +32,7 @@ const Login = () => {
     try {
       const result = await login(formData.email, formData.password);
       if (result.success) {
-        navigate('/courses');
+        navigate('/');
       } else {
         setError(result.message);
       }
@@ -65,7 +65,6 @@ const Login = () => {
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <div className="input-wrapper">
-              <FiMail className="input-icon" />
               <input
                 type="email"
                 id="email"
@@ -82,7 +81,6 @@ const Login = () => {
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <div className="input-wrapper">
-              <FiLock className="input-icon" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"

@@ -94,13 +94,13 @@
 }
 
 .course-card.draft {
-  border-left: 4px solid #f59e0b;
-  background: linear-gradient(135deg, #fef3c7 0%, #ffffff 100%);
+  border-left: 4px solid #ffffff;
+  background: linear-gradient(135deg, #ffefae 0%, #ffffff 100%);
 }
 
 .course-card.published {
-  border-left: 4px solid #10b981;
-  background: linear-gradient(135deg, #d1fae5 0%, #ffffff 100%);
+  border-left: 4px solid #ffffff;
+  background: linear-gradient(135deg, #d5d5d5 0%, #ffffff 100%);
 }
 
 .course-card:hover {

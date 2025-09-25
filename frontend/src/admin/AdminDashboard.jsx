@@ -9,10 +9,7 @@ import {
   FiBook,
   FiPlus,
   FiBarChart2,
-  FiMenu,
-  FiX,
   FiHome,
-  FiSettings,
   FiLogOut
 } from 'react-icons/fi';
 import './AdminDashboard.css';
@@ -20,7 +17,6 @@ import './AdminDashboard.css';
 const AdminDashboard = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Check if user is admin
   if (!isAuthenticated || user?.role !== 'admin') {
@@ -65,21 +61,14 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       {/* Sidebar */}
-      <div className={`admin-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
+      <div className="admin-sidebar open">
         <div className="sidebar-header">
           <div className="logo">
             <h2>Admin Panel</h2>
           </div>
-          <button 
-            className="sidebar-toggle"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            {sidebarOpen ? <FiX /> : <FiMenu />}
-          </button>
         </div>
 
-        {sidebarOpen && (
-          <div className="sidebar-content">
+        <div className="sidebar-content">
             <div className="user-info">
               <div className="user-avatar">
                 <FiUsers />
@@ -90,35 +79,35 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            <nav className="sidebar-nav">
+            <ul className="sidebar-nav">
               {menuItems.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`nav-item ${isActive(item.path, item.exact) ? 'active' : ''}`}
-                  >
-                    <Icon className="nav-icon" />
-                    <span className="nav-text">{item.name}</span>
-                  </Link>
+                  <li key={item.path} className="nav-item">
+                    <Link
+                      to={item.path}
+                      className={`nav-link ${isActive(item.path, item.exact) ? 'active' : ''}`}
+                    >
+                      <Icon />
+                      <span>{item.name}</span>
+                    </Link>
+                  </li>
                 );
               })}
-            </nav>
+            </ul>
 
             <div className="sidebar-footer">
-              <Link to="/" className="nav-item">
-                <FiHome className="nav-icon" />
-                <span className="nav-text">Back to Site</span>
+              <Link to="/" className="nav-link">
+                <FiHome />
+                <span>Back to Site</span>
               </Link>
               
-              <button onClick={handleLogout} className="nav-item logout-btn">
-                <FiLogOut className="nav-icon" />
-                <span className="nav-text">Logout</span>
+              <button onClick={handleLogout} className="nav-link logout-btn">
+                <FiLogOut />
+                <span>Logout</span>
               </button>
             </div>
           </div>
-        )}
       </div>
 
       {/* Main Content */}

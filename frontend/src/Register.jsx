@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
-import { FiUser, FiLock, FiEye, FiEyeOff, FiLoader, FiMail, FiUserPlus } from 'react-icons/fi';
+import { FiEye, FiEyeOff, FiLoader, FiUserPlus } from 'react-icons/fi';
 import { validatePassword, getPasswordStrength, getPasswordRequirementsText } from './utils/passwordValidation';
 import './Auth.css';
 
@@ -68,7 +68,7 @@ const Register = () => {
     try {
       const result = await register(formData.name, formData.email, formData.password);
       if (result.success) {
-        navigate('/courses');
+        navigate('/');
       } else {
         setError(result.message);
       }
@@ -105,7 +105,6 @@ const Register = () => {
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
             <div className="input-wrapper">
-              <FiUser className="input-icon" />
               <input
                 type="text"
                 id="name"
@@ -122,7 +121,6 @@ const Register = () => {
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <div className="input-wrapper">
-              <FiMail className="input-icon" />
               <input
                 type="email"
                 id="email"
@@ -139,7 +137,6 @@ const Register = () => {
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <div className="input-wrapper">
-              <FiLock className="input-icon" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
@@ -199,7 +196,6 @@ const Register = () => {
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <div className="input-wrapper">
-              <FiLock className="input-icon" />
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 id="confirmPassword"

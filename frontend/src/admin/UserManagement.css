@@ -3,7 +3,6 @@
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-}
 
 .user-management-header {
   margin-bottom: 30px;
@@ -118,15 +117,17 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   margin-bottom: 20px;
+  overflow-x: auto;
 }
 
 .users-table {
   width: 100%;
+  min-width: 1000px;
 }
 
 .table-header {
   display: grid;
-  grid-template-columns: 2fr 0.8fr 1.2fr 1fr 1fr 1fr;
+  grid-template-columns: minmax(200px, 2.5fr) minmax(80px, 0.8fr) minmax(120px, 1.3fr) minmax(100px, 1.1fr) minmax(90px, 0.9fr) minmax(120px, 1fr);
   gap: 15px;
   padding: 20px;
   background-color: #f7fafc;
@@ -145,7 +146,7 @@
 
 .table-row {
   display: grid;
-  grid-template-columns: 2fr 0.8fr 1.2fr 1fr 1fr 1fr;
+  grid-template-columns: minmax(200px, 2.5fr) minmax(80px, 0.8fr) minmax(120px, 1.3fr) minmax(100px, 1.1fr) minmax(90px, 0.9fr) minmax(120px, 1fr);
   gap: 15px;
   padding: 20px;
   border-bottom: 1px solid #e2e8f0;
@@ -160,6 +161,9 @@
   display: flex;
   align-items: center;
   font-size: 14px;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 /* User Cell */
@@ -188,17 +192,27 @@
 .user-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  flex: 1;
 }
 
 .user-name {
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
 }
 
 .user-email {
   color: #718096;
   font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
 }
 
 /* Role Badge */
@@ -301,8 +315,8 @@
 }
 
 .delete-btn {
-  background-color: #fed7d7;
-  color: #e53e3e;
+  background-color: #010101;
+  color: #dfc1c1;
 }
 
 .delete-btn:hover {
@@ -660,6 +674,24 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .users-table {
+    min-width: 900px;
+  }
+  
+  .table-header,
+  .table-row {
+    grid-template-columns: minmax(180px, 2.2fr) minmax(70px, 0.7fr) minmax(110px, 1.2fr) minmax(90px, 1fr) minmax(80px, 0.8fr) minmax(100px, 0.9fr);
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  .user-name,
+  .user-email {
+    max-width: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .user-management-container {
     padding: 15px;
@@ -674,35 +706,36 @@
     min-width: auto;
   }
   
+  .users-table {
+    min-width: 600px;
+  }
+  
   .table-header,
   .table-row {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: minmax(150px, 2fr) minmax(60px, 0.6fr) minmax(100px, 1.1fr) minmax(80px, 0.9fr) minmax(70px, 0.7fr) minmax(80px, 0.8fr);
+    gap: 8px;
+    padding: 12px;
   }
   
   .table-header {
-    display: none;
-  }
-  
-  .table-row {
-    flex-direction: column;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 11px;
   }
   
   .table-cell {
-    justify-content: space-between;
-    padding: 5px 0;
+    font-size: 13px;
   }
   
-  .table-cell::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: #4a5568;
-    margin-right: 10px;
+  .user-name,
+  .user-email {
+    max-width: 100px;
+  }
+  
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+}
   }
   
   .actions-cell {
@@ -748,7 +781,7 @@
   .quiz-row {
     padding: 10px;
   }
-}
+
 
 @media (max-width: 480px) {
   .user-management-header h1 {
