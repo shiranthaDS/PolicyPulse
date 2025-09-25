@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import CoursesList from './CoursesList';
+import CoursesPage from './CoursesPage';
 import CourseEnroll from './CourseEnroll';
 import CourseWorkspace from './CourseWorkspace';
 import Login from './Login';
@@ -10,7 +11,7 @@ import AdminDashboard from './admin/AdminDashboard';
 import UserDashboard from './UserDashboard';
 import SecurityManagerDashboard from './admin/SecurityManagerDashboard';
 import AuditorDashboard from './admin/AuditorDashboard';
-import { FiUser, FiLogOut, FiSettings, FiHome, FiShield, FiFileText } from 'react-icons/fi';
+import { FiUser, FiLogOut, FiSettings, FiHome, FiShield, FiFileText, FiBook } from 'react-icons/fi';
 import './App.css';
 
 // Protected Route Component for Employee Dashboard
@@ -39,18 +40,21 @@ function NavBar() {
     <nav className="navbar">
       <div className="nav-container">
         <Link to="/" className="nav-logo">
-          PolicyPulse Learning
+          PolicyPulse 
         </Link>
         <div className="nav-links">
-          <Link to="/" className="nav-link">
-            Courses
-          </Link>
+         
           {isAuthenticated ? (
             <>
               {user?.role === 'employee' && (
-                <Link to="/dashboard" className="nav-link">
-                  <FiHome /> Dashboard
-                </Link>
+                <>
+                  <Link to="/dashboard" className="nav-link">
+                    <FiHome /> Dashboard
+                  </Link>
+                  <Link to="/courses-page" className="nav-link">
+                    <FiBook /> Courses
+                  </Link>
+                </>
               )}
               {user?.role === 'admin' && (
                 <Link to="/admin" className="nav-link admin-link">
@@ -103,6 +107,11 @@ function App() {
             <Routes>
               <Route path="/" element={<CoursesList />} />
               <Route path="/courses" element={<CoursesList />} />
+              <Route path="/courses-page" element={
+                <EmployeeRoute>
+                  <CoursesPage />
+                </EmployeeRoute>
+              } />
               <Route path="/dashboard" element={
                 <EmployeeRoute>
                   <UserDashboard />
